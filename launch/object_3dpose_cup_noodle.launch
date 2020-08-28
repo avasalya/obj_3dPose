@@ -1,0 +1,46 @@
+<launch>
+    <arg name="icpMaxIter" default="100" />
+    <arg name="pose_cnn_param_file" default="$(find object_3dpose)/resources/models/convini/cup_noodle.resnet.dat" />
+
+    <!-- 3d model file of object -->
+    <arg name="cad_file" default="$(find object_3dpose)/resources/dataset/convini/cupnoodle.ply" />
+
+    <!-- Astra -->
+    <arg name="image_topic" default="/camera/rgb/image_rect_color" />
+    <arg name="cloud_topic" default="/camera/depth_registered/points" />
+
+    <!-- Kinect -->
+    <!-- <arg name="image_topic" default="/kinect2/qhd/image_color_rect" /> -->
+    <!-- <arg name="cloud_topic" default="/kinect2/qhd/points" /> -->
+
+    <arg name="bbox_topic" default="/darknet_ros/bounding_boxes" />
+    <!-- <arg name="mesh_file" default="file://$(find object_3dpose)/resources/dataset/convini/cup_noodle.dae" /> -->
+
+    <!-- Astra -->
+    <arg name="point_cloud_height" default="480" />
+    <arg name="point_cloud_width" default="640" />
+
+    <!-- Kinect qhd -->
+    <!-- <arg name="point_cloud_height" default="540" /> -->
+    <!-- <arg name="point_cloud_width" default="960" /> -->
+
+    <!-- <arg name="t_grasp_x" default="0.0" />   -->
+    <!-- <arg name="t_grasp_y" default="-0.03" /> -->
+    <!-- <arg name="t_grasp_z" default="0.0" /> -->
+
+    <node name="object_3d_pose" pkg="object_3dpose" type="object_icp_ros_v0.py" output="screen">
+        <param name="icpMaxIter" type="int" value="$(arg icpMaxIter)" />
+        <param name="pose_cnn_param_file" type="str" value="$(arg pose_cnn_param_file)" />
+        <param name="cad_file" type="str" value="$(arg cad_file)" />
+        <param name="image_topic" type="str" value="$(arg image_topic)" />
+        <param name="cloud_topic" type="str" value="$(arg cloud_topic)" />
+        <param name="bbox_topic" type="str" value="$(arg bbox_topic)" />
+        <!-- <param name="mesh_file" type="str" value="$(arg mesh_file)" /> -->
+        <param name="point_cloud_height" type="int" value="$(arg point_cloud_height)" />
+        <param name="point_cloud_width" type="int" value="$(arg point_cloud_width)" />
+        <!-- <param name="t_grasp_x" type="double" value="$(arg t_grasp_x)" />   -->
+        <!-- <param name="t_grasp_y" type="double" value="$(arg t_grasp_y)" /> -->
+        <!-- <param name="t_grasp_z" type="double" value="$(arg t_grasp_z)" /> -->
+
+    </node>
+</launch>
